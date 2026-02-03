@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine? </title>
+    <title>Quiz</title>
     <style>
         * {
             margin: 0;
@@ -15,332 +15,312 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #90878d 0%, #170e6b 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-            /* allow vertical scroll if needed on very small phones */
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-        .hearts {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .heart {
-            position: absolute;
-            font-size: 24px;
-            animation: float 6s infinite;
-            opacity: 0;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+            padding: 40px 20px;
         }
 
         .container {
+            max-width: 700px;
+            margin: 0 auto;
             background: white;
-            border-radius: 24px;
-            padding: 28px 20px;
-            text-align: center;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 420px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .stitch {
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 16px;
-            transition: all 0.5s ease;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
-        }
-
-        .stitch img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .stitch.happy {
-            animation: bounce 0.5s ease;
-        }
-
-        .stitch.sad {
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-
-        .flowers {
-            font-size: 32px;
-            margin-top: -12px;
-            margin-bottom: 12px;
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         h1 {
             color: #e91e63;
-            font-size: 1.7rem;
-            margin-bottom: 8px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 36px;
         }
 
-        .question {
+        .subtitle {
+            text-align: center;
             color: #666;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            min-height: 24px;
+            margin-bottom: 40px;
+            font-size: 18px;
         }
 
-        .buttons {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
+        .score {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #e91e63;
             position: relative;
-            flex-wrap: wrap;
         }
 
-        button {
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            color: #e91e63;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .marks {
+            background: #e91e63;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .question-text {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
+
+        input[type="text"].correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
             border: none;
-            border-radius: 14px;
-            font-size: 1rem;
+            border-radius: 15px;
+            font-size: 20px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 12px 22px;
+            margin-top: 30px;
+            transition: all 0.3s;
         }
 
-        #yesBtn {
-            background: linear-gradient(135deg, #be0ad2 0%, #f5576c 100%);
-            color: white;
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
         }
 
-        #yesBtn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(245, 87, 108, 0.4);
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        #noBtn {
-            background: #e0e0e0;
-            color: #666;
+        .error-message {
+            color: #f44336;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 500;
+            display: none;
         }
 
-        #noBtn:hover {
-            background: #d0d0d0;
+        .success-message {
+            color: #4caf50;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 500;
+            display: none;
         }
 
-        .hidden {
-            display: none !important;
+        .hint-btn {
+            position: absolute;
+            top: 25px;
+            right: 15px;
+            background: #ffeb3b;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        /* Small phones */
-        @media (max-width: 480px) {
-            body {
-                padding: 12px;
-            }
-
-            .container {
-                padding: 22px 16px;
-                border-radius: 20px;
-            }
-
-            .stitch {
-                width: 140px;
-                height: 140px;
-            }
-
-            h1 {
-                font-size: 1.45rem;
-            }
-
-            .question {
-                font-size: 0.95rem;
-            }
-
-            button {
-                font-size: 0.95rem;
-                padding: 10px 18px;
-            }
-
-            .heart {
-                font-size: 20px;
-            }
+        .hint-btn:hover {
+            background: #fdd835;
         }
 
-        /* Very small devices (old phones, 320px width) */
-        @media (max-width: 360px) {
-            h1 {
-                font-size: 1.3rem;
-            }
-
-            .stitch {
-                width: 120px;
-                height: 120px;
-            }
-
-            .buttons {
-                gap: 10px;
-            }
-
-            button {
-                width: 100%;
-                max-width: 180px;
-            }
+        .hint-text {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="hearts" id="hearts"></div>
-    
     <div class="container">
-        <div class="stitch" id="stitch">
-            <img src="images/stitch.png" alt="Stitch" id="stitchImg">
-        </div>
-        <div class="flowers"></div>
-        <h1>Would You Be My Valentine?</h1>
-        <p class="question" id="question"></p>
+        <h1>Lesssssss Goooo!!</h1>
+        <p class="subtitle">Me numm YOU, Good Luck</p>
         
-        <div class="buttons">
-            <button id="yesBtn">Yes! 🩶</button>
-            <button id="noBtn">No</button>
+        <div class="score">
+            Score: <span id="currentScore">0</span>/10 marks
         </div>
+
+        <form id="quizForm">
+            <div class="question-block">
+                <div class="question-header">
+                    <span class="question-number">Question 1</span>
+                </div>
+                <p class="question-text">Name the person who I love the most?</p>
+                <input type="text" id="q1" required placeholder="Type your answer here...">
+            </div>
+
+            <div class="question-block">
+                <div class="question-header">
+                    <span class="question-number">Question 2</span>
+                </div>
+                <p class="question-text">Who is My Angel & The only Angel?</p>
+                <input type="text" id="q2" required placeholder="Type your answer here...">
+            </div>
+
+            <div class="question-block">
+                <div class="question-header">
+                    <span class="question-number">Question 3</span>
+                    
+                </div>
+                <p class="question-text">Who is My first & last love ?</p>
+                <input type="text" id="q3" required placeholder="Type your answer here...">
+            </div>
+
+            <div class="question-block" id="q4-block">
+                <div class="question-header">
+                    <span class="question-number">Question 4</span>
+                    <button type="button" class="hint-btn" onclick="toggleHint('q4-hint')">Hint</button>
+                </div>
+                <p class="question-text">من الذي عشقك ؟</p>
+                <input type="text" id="q4" required placeholder="Type your answer here...">
+                <div class="hint-text" id="q4-hint">قلبٌ رآكِ فاختاركِ قدرًا لا يُراجع</div>
+            </div>
+
+            <div class="question-block" id="q5-block">
+                <div class="question-header">
+                    <span class="question-number">Question 5</span>
+                    <button type="button" class="hint-btn" onclick="toggleHint('q5-hint')">Hint</button>
+                </div>
+                <p class="question-text">من الذي هواك ؟</p>
+                <input type="text" id="q5" required placeholder="Type your answer here...">
+                <div class="hint-text" id="q5-hint">قلبٌ إذا مرّ اسمك، انحنى له العمر</div>
+            </div>
+
+            <div class="error-message" id="errorMsg">
+                Don't Leave it Baby
+            </div>
+            <div class="success-message" id="successMsg">
+                I'm So Proud of You Totaa !
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Send to Abdulla</button>
+        </form>
     </div>
 
     <script>
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '🩶';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (Math.random() * 3 + 7) + 's';
-            heart.style.animationDelay = Math.random() * 2 + 's';
-            document.getElementById('hearts').appendChild(heart);
-            setTimeout(() => heart.remove(), 8000);
+        function toggleHint(hintId) {
+            const hint = document.getElementById(hintId);
+            hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
         }
 
-        setInterval(createHeart, 300);
-
-        logEvent('page_visit', { timestamp: new Date().toISOString() });
-
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const stitch = document.getElementById('stitch');
-        const stitchImg = document.getElementById('stitchImg');
-        const question = document.getElementById('question');
-        
-        let noClickCount = 0;
-        let yesBtnSize = 1;
-
-        const stitchImages = {
-            normal: 'images/stitch.png',
-            happy: 'images/stitch_happy.gif',
-            sad1: 'images/stitch_sad.gif',
-            sad2: 'images/stitch_cry.gif',
-            sad3: 'images/stitch_very_sad.gif'
+        // CUSTOMIZE THESE ANSWERS
+        const answers = {
+            q1: ['watch movies', 'movies', 'netflix', 'hang out', 'talk'],
+            q2: ['school', 'college', 'university', 'class', 'cafe', 'coffee shop'],
+            q3: ['laugh', 'smile', 'jokes', 'being silly', 'humor', 'your laugh'],
+            q4: ['perfect', 'love song', 'our song', 'any song', 'music'],
+            q5: ['first date', 'first kiss', 'trip', 'vacation', 'together', 'all of them']
         };
 
-        const sadMessages = [
-            ""
-        ];
+        const form = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        const scoreDisplay = document.getElementById('currentScore');
 
-        function makeStitchHappy() {
-            stitchImg.src = stitchImages.happy;
-            stitch.classList.add('happy');
-            setTimeout(() => stitch.classList.remove('happy'), 500);
-        }
+        logEvent('quiz_page_loaded', { timestamp: new Date().toISOString() });
 
-        function makeStitchSad(level) {
-            if (level === 1) {
-                stitchImg.src = stitchImages.sad1;
-            } else if (level === 2) {
-                stitchImg.src = stitchImages.sad2;
-            } else {
-                stitchImg.src = stitchImages.sad3;
-            }
-            stitch.classList.add('sad');
-            setTimeout(() => stitch.classList.remove('sad'), 500);
-        }
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const q1 = document.getElementById('q1').value.trim();
+            const q2 = document.getElementById('q2').value.trim();
+            const q3 = document.getElementById('q3').value.trim();
+            const q4 = document.getElementById('q4').value.trim();
+            const q5 = document.getElementById('q5').value.trim();
 
-        function makeStitchNeutral() {
-            stitchImg.src = stitchImages.normal;
-        }
-
-        noBtn.addEventListener('click', function() {
-            noClickCount++;
-            makeStitchSad(Math.min(noClickCount, 3));
-            question.textContent = sadMessages[Math.min(noClickCount - 1, sadMessages.length - 1)];
-            yesBtnSize += 0.35;
-            yesBtn.style.transform = `scale(${yesBtnSize})`;
-
-            if (noClickCount >= 5) {
-                noBtn.style.opacity = '0';
-                noBtn.style.pointerEvents = 'none';
+            if (!q1 || !q2 || !q3 || !q4 || !q5) {
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+                return;
             }
 
-            logEvent('no_clicked', { clickCount: noClickCount });
-        });
+            const userAnswers = { q1, q2, q3, q4, q5 };
+            logEvent('quiz_submitted', { answers: userAnswers, timestamp: new Date().toISOString() });
 
-        yesBtn.addEventListener('click', function() {
-            makeStitchHappy();
-
-            document.querySelector('.buttons').innerHTML = `
-                <button id="quizBtn" style="
-                    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                    color: white;
-                    padding: 12px 26px;
-                    font-size: 1.1rem;
-                    border-radius: 16px;
-                    font-weight: bold;
-                ">
-                    Quiz🫣 ?
-                </button>
-            `;
-
-            document.getElementById('quizBtn').addEventListener('click', function() {
-                logEvent('quiz_started', { timestamp: new Date().toISOString() });
-                window.location.href = 'quiz.html';
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                input.classList.add('correct');
+                input.disabled = true;
             });
 
-            logEvent('yes_clicked', { afterNoClicks: noClickCount });
+            scoreDisplay.textContent = '10';
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'block';
+
+            submitBtn.textContent = 'Yalla';
+            submitBtn.style.background = 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)';
+            
+            setTimeout(() => {
+                window.location.href = 'gift.html';
+            }, 1500);
         });
 
         function logEvent(eventType, data) {
             const logs = JSON.parse(localStorage.getItem('valentine_logs') || '[]');
-            logs.push({
-                event: eventType,
-                data,
-                timestamp: new Date().toISOString()
-            });
+            logs.push({ event: eventType, data: data, timestamp: new Date().toISOString() });
             localStorage.setItem('valentine_logs', JSON.stringify(logs));
+
+            const FORM_ID = '1FAIpQLSektgXI6RsHGSMAlzBgY5Y6EMTf67r74bLPud_59RC2dX3nkA';
+            const ENTRY_EVENT = 'entry.37518403';
+            const ENTRY_DATA = 'entry.1693608898';
+            const ENTRY_TIME = 'entry.331095278';
+            
+            if (FORM_ID !== 'YOUR_FORM_ID_HERE') {
+                const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+                const formData = new FormData();
+                formData.append(ENTRY_EVENT, eventType);
+                formData.append(ENTRY_DATA, JSON.stringify(data));
+                formData.append(ENTRY_TIME, new Date().toISOString());
+                
+                fetch(formUrl, { method: 'POST', body: formData, mode: 'no-cors' }).catch(() => {});
+            }
         }
     </script>
 </body>

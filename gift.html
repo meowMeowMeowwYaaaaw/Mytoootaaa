@@ -2,292 +2,354 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valentine Words</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Words </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #90878d 0%, #170e6b 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #90878d 0%, #170e6b 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
 
-    .container {
-      max-width: 700px;
-      width: 100%;
-      margin: 0 auto;
-      background: white;
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
 
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-    h1 {
-      color: #e91e63;
-      font-size: 2.2em;
-      margin-bottom: 10px;
-    }
+        h1 {
+            color: #e91e63;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
 
-    .subtitle {
-      color: #666;
-      font-style: italic;
-      font-size: 1.1em;
-    }
+        .subtitle {
+            color: #666;
+            font-size: 20px;
+            font-style: italic;
+        }
 
-    .gift-message {
-      background: linear-gradient(135deg, #fff5f7 0%, #ffe6f0 100%);
-      padding: 25px;
-      border-radius: 15px;
-      border-left: 5px solid #e91e63;
-      margin-bottom: 30px;
-    }
+        .gift-message {
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe6f0 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border-left: 5px solid #e91e63;
+        }
 
-    .gift-message p {
-      color: #555;
-      line-height: 1.7;
-      font-size: 1em;
-      margin-bottom: 15px;
-    }
+        .gift-message h2 {
+            color: #e91e63;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
 
-    footer {
-      color: #e91e63;
-      text-align: right;
-      font-style: italic;
-      margin-top: 10px;
-    }
+        .gift-message p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
 
-    .photo-wrapper {
-      text-align: center;
-      margin: 20px 0 30px;
-    }
+        .photos-section {
+            margin-bottom: 20px 0 30px;
+        }
 
-    .main-photo {
-      width: 100%;
-      max-width: 260px;
-      height: auto;
-      border-radius: 15px;
-      display: block;
-      margin: 0 auto 10px;
-    }
+        .photos-section h2 {
+            color: #e91e63;
+            margin-bottom: 10px;
+            font-size: 22px;
+            text-align: center;
+        }
 
-    .photo-caption {
-      font-size: 0.9em;
-      color: #666;
-    }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+            justify-items: center;
+        }
 
-    .hearts-decoration {
-      text-align: center;
-      color: #e91e63;
-      font-size: 1.2em;
-      margin: 25px 0;
-    }
+        .photo-item {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: #fff5f7;
+        }
 
-    .reply-section {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-    }
+        .photo-item img {
+            width: 70%;
+            height: 70%;
+            padding: 20px;
 
-    .reply-section h2 {
-      color: #e91e63;
-      font-size: 1.4em;
-      margin-bottom: 15px;
-      text-align: center;
-    }
+        }
 
-    textarea {
-      width: 100%;
-      padding: 15px;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      font-size: 1em;
-      resize: vertical;
-      min-height: 120px;
-      transition: border-color 0.3s;
-    }
+        .photo-wrapper {
+            text-align: center;
+            margin: 20px 0 30px;
+            
+        }
 
-    textarea:focus {
-      outline: none;
-      border-color: #e91e63;
-    }
+        .main-photo {
+            width: 95%;
+            height: 90%;
+            max-width: 240px;
+            border-radius: 20px;
+            display: block;
+            margin: 0 auto 10px;
+        }
 
-    .submit-btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1em;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
-      transition: all 0.3s;
-    }
+        .photo-caption {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+        }
 
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
-    }
 
-    .success-message {
-      background: #4caf50;
-      color: white;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-      margin-top: 10px;
-      display: none;
-      font-weight: 500;
-    }
 
-    .note {
-      text-align: center;
-      color: #999;
-      font-size: 0.85em;
-      margin-top: 30px;
-      font-style: italic;
-    }
+        .reply-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
 
-    /* MOBILE OPTIMIZATION */
-    @media (max-width: 480px) {
-      body {
-        padding: 15px;
-      }
+        .reply-section h2 {
+            color: #e91e63;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
 
-      .container {
-        padding: 20px 15px;
-        border-radius: 15px;
-      }
+        textarea {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 150px;
+            transition: border-color 0.3s;
+        }
 
-      h1 {
-        font-size: 1.8em;
-      }
+        textarea:focus {
+            outline: none;
+            border-color: #e91e63;
+        }
 
-      .gift-message p {
-        font-size: 0.95em;
-      }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
 
-      .submit-btn {
-        font-size: 1em;
-        padding: 12px;
-      }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
 
-      .photo-caption {
-        font-size: 0.85em;
-      }
-    }
-  </style>
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .hearts-decoration {
+            text-align: center;
+            font-size: 30px;
+            margin: 30px 0;
+        }
+
+        .note {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-top: 30px;
+            font-style: italic;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="header">
-      <h1></h1>
+    <div class="container">
+        <div class="header">
+            <h1></h1>
+
+        </div>
+
+        <div class="gift-message">
+
+            <p>
+                أنا الذي هواكِ حتى<br>
+                صار الهوى اسمكِ الآخر،<br>
+                وحتى إذا مرّ طيفكِ<br>
+                ارتبك القلب وسكت الكلام.
+            </p>
+            <p>
+                هويتكِ لا لأنكِ جميلة،<br>
+                بل لأن الجمال كان ناقصًا<br>
+                حتى اكتمل بكِ،<br>
+                ولأن العالم حين مررتِ به<br>
+                أصبح أخفّ على الروح.
+            </p>
+            <p>
+                أحبكِ كما يُحب الدعاء سرًّا،<br>
+                وكما تُحفظ الأسرار في الصدر<br>
+                دون وعدٍ أو شرط،<br>
+                أحبكِ لأنكِ الطمأنينة<br>
+                حين يضيق كل شيء.
+            </p>
+            <p>
+                معكِ تعلّمت أن الهوى<br>
+                ليس اندفاعًا،<br>
+                بل ثباتٌ يشبه الجبال،<br>
+                وصبرٌ يشبه البحر،<br>
+                ووفاءٌ لا يشيخ.
+            </p>
+            <p>
+                إن سألوني عنكِ قلتُ:<br>
+                هي التي إن حضرت<br>
+                غاب ما سواها،<br>
+                وإن غابت<br>
+                ظلّ القلب ينتظرها<br>
+                كما ينتظر الليل قمَره.
+            </p>
+            <p>
+                ولو كتب الله لي أمنيةً أخيرة،<br>
+                لاخترتكِ مرةً أخرى،<br>
+                لأن بعض القلوب<br>
+                لا تُعاش إلا مرة…<br>
+                وأنتِ تلك المرّة.
+            </p>
+            <footer>بقلبٍ لا يجيد سواكِ،
+                محبّك عبدالله</footer>
+        </div>
+
+
+        <div class="photo-wrapper">
+            <img src="images/ring.jpg" class="main-photo">
+            <p class="photo-caption">The beginning of our story 7/1/2026</p>
+        </div>
+
+
+        <div class="hearts-decoration">
+            The beginning of our story
+        </div>
+
+        <div class="reply-section">
+            <h2>💌 ?</h2>
+            <p style="color: #666; margin-bottom: 15px;"></p>
+            <textarea id="replyBox" placeholder="Share your feelings here... 💭"></textarea>
+            <button class="submit-btn" id="submitReply">Send Your Message </button>
+            <div class="success-message" id="successMsg">
+                Love you soooo much
+            </div>
+        </div>
+
+        <p class="note">
+            Made with love, Forever Your's Abdulla
+        </p>
     </div>
 
-    <div class="gift-message">
-      <p>أنا الذي هواكِ حتى<br> صار الهوى اسمكِ الآخر،<br> وحتى إذا مرّ طيفكِ<br> ارتبك القلب وسكت الكلام.</p>
-      <p>هويتكِ لا لأنكِ جميلة،<br> بل لأن الجمال كان ناقصًا حتى اكتمل بكِ،<br> ولأن العالم حين مررتِ به أصبح أخفّ
-        على الروح.</p>
-      <p>أحبكِ كما يُحب الدعاء سرًّا،<br> وكما تُحفظ الأسرار في الصدر دون وعدٍ أو شرط،<br> أحبكِ لأنكِ الطمأنينة حين
-        يضيق كل شيء.</p>
-      <p>معكِ تعلّمت أن الهوى ليس اندفاعًا،<br> بل ثباتٌ يشبه الجبال،<br> وصبرٌ يشبه البحر،<br> ووفاءٌ لا يشيخ.</p>
-      <p>إن سألوني عنكِ قلتُ:<br> هي التي إن حضرت غاب ما سواها،<br> وإن غابت ظلّ القلب ينتظرها كما ينتظر الليل قمَره.
-      </p>
-      <p>ولو كتب الله لي أمنيةً أخيرة،<br> لاخترتكِ مرةً أخرى،<br> لأن بعض القلوب لا تُعاش إلا مرة…<br> وأنتِ تلك
-        المرّة.</p>
-      <footer>بقلبٍ لا يجيد سواكِ، محبّك عبدالله</footer>
-    </div>
+    <script>
+        // Log gift page visit
+        logEvent('gift_page_loaded', { timestamp: new Date().toISOString() });
 
-    <div class="photo-wrapper">
-      <img src="images/ring.jpg" class="main-photo">
-      <p class="photo-caption">The beginning of our story 7/1/2026</p>
-    </div>
+        const submitBtn = document.getElementById('submitReply');
+        const replyBox = document.getElementById('replyBox');
+        const successMsg = document.getElementById('successMsg');
 
-    <
+        submitBtn.addEventListener('click', function () {
+            const reply = replyBox.value.trim();
 
-    <div class="reply-section">
-      <h2>💌 Your Message</h2>
-      <textarea id="replyBox" placeholder="Share your feelings here... 💭"></textarea>
-      <button class="submit-btn" id="submitReply">Send Your Message </button>
-      <div class="success-message" id="successMsg">Love you soooo much </div>
-    </div>
+            if (reply) {
+                // Log the reply
+                logEvent('reply_submitted', {
+                    reply: reply,
+                    timestamp: new Date().toISOString(),
+                    charCount: reply.length
+                });
 
-    <p class="note">Made with love, Forever Yours Abdulla</p>
-  </div>
+                // Show success message
+                successMsg.style.display = 'block';
+                replyBox.disabled = true;
+                submitBtn.textContent = 'Message Sent! ';
+                submitBtn.disabled = true;
+                submitBtn.style.background = '#4caf50';
 
-  <script>
-    // Log gift page visit
-    logEvent('gift_page_loaded', { timestamp: new Date().toISOString() });
-
-    const submitBtn = document.getElementById('submitReply');
-    const replyBox = document.getElementById('replyBox');
-    const successMsg = document.getElementById('successMsg');
-
-    submitBtn.addEventListener('click', function () {
-      const reply = replyBox.value.trim();
-
-      if (reply) {
-        logEvent('reply_submitted', {
-          reply: reply,
-          timestamp: new Date().toISOString(),
-          charCount: reply.length
+                // Scroll to success message
+                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                alert('Please write something before sending! ');
+            }
         });
 
-        successMsg.style.display = 'block';
-        replyBox.disabled = true;
-        submitBtn.textContent = 'Message Sent! ';
-        submitBtn.disabled = true;
-        submitBtn.style.background = '#4caf50';
-        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        alert('Please write something before sending! ');
-      }
-    });
+        // Simple logging function
+        function logEvent(eventType, data) {
+            // Local storage
+            const logs = JSON.parse(localStorage.getItem('valentine_logs') || '[]');
+            logs.push({
+                event: eventType,
+                data: data,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('valentine_logs', JSON.stringify(logs));
 
-    function logEvent(eventType, data) {
-      const logs = JSON.parse(localStorage.getItem('valentine_logs') || '[]');
-      logs.push({
-        event: eventType,
-         data,
-        timestamp: new Date().toISOString()
-      });
-      localStorage.setItem('valentine_logs', JSON.stringify(logs));
+            // Remote logging to Google Form
+            const FORM_ID = '1FAIpQLSektgXI6RsHGSMAlzBgY5Y6EMTf67r74bLPud_59RC2dX3nkA';
+            const ENTRY_EVENT = 'entry.37518403';
+            const ENTRY_DATA = 'entry.1693608898';
+            const ENTRY_TIME = 'entry.331095278';
 
-      const FORM_ID = '1FAIpQLSektgXI6RsHGSMAlzBgY5Y6EMTf67r74bLPud_59RC2dX3nkA';
-      const ENTRY_EVENT = 'entry.37518403';
-      const ENTRY_DATA = 'entry.1693608898';
-      const ENTRY_TIME = 'entry.331095278';
+            if (FORM_ID !== 'YOUR_FORM_ID_HERE') {
+                const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+                const formData = new FormData();
+                formData.append(ENTRY_EVENT, eventType);
+                formData.append(ENTRY_DATA, JSON.stringify(data));
+                formData.append(ENTRY_TIME, new Date().toISOString());
 
-      if (FORM_ID !== 'YOUR_FORM_ID_HERE') {
-        const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
-        const formData = new FormData();
-        formData.append(ENTRY_EVENT, eventType);
-        formData.append(ENTRY_DATA, JSON.stringify(data));
-        formData.append(ENTRY_TIME, new Date().toISOString());
-
-        fetch(formUrl, {
-          method: 'POST',
-          body: formData,
-          mode: 'no-cors'
-        }).catch(() => { });
-      }
-    }
-  </script>
+                fetch(formUrl, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                }).catch(() => { });
+            }
+        }
+    </script>
 </body>
 
 </html>

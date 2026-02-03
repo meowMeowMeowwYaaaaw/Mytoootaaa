@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,12 +42,15 @@
                 transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
             }
+
             10% {
                 opacity: 1;
             }
+
             90% {
                 opacity: 1;
             }
+
             100% {
                 transform: translateY(-100vh) rotate(360deg);
                 opacity: 0;
@@ -58,7 +62,7 @@
             border-radius: 30px;
             padding: 50px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 500px;
             position: relative;
             z-index: 10;
@@ -70,7 +74,7 @@
             margin-bottom: 20px;
             transition: all 0.5s ease;
             display: inline-block;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
         }
 
         .stitch img {
@@ -88,14 +92,31 @@
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
         }
 
         .flowers {
@@ -161,9 +182,10 @@
         }
     </style>
 </head>
+
 <body>
     <div class="hearts" id="hearts"></div>
-    
+
     <div class="container">
         <div class="stitch" id="stitch">
             <img src="images/stitch.png" alt="Stitch" id="stitchImg">
@@ -171,7 +193,7 @@
         <div class="flowers"></div>
         <h1>Would You Be My Valentine?</h1>
         <p class="question" id="question"></p>
-        
+
         <div class="buttons">
             <button id="yesBtn">Yes! 🩶</button>
             <button id="noBtn">No</button>
@@ -199,7 +221,7 @@
         const stitch = document.getElementById('stitch');
         const stitchImg = document.getElementById('stitchImg');
         const question = document.getElementById('question');
-        
+
         let noClickCount = 0;
         let yesBtnSize = 1;
 
@@ -237,7 +259,7 @@
             stitchImg.src = stitchImages.normal;
         }
 
-        noBtn.addEventListener('click', function() {
+        noBtn.addEventListener('click', function () {
             noClickCount++;
             makeStitchSad(Math.min(noClickCount, 3));
             question.textContent = sadMessages[Math.min(noClickCount - 1, sadMessages.length - 1)];
@@ -253,9 +275,9 @@
             logEvent('no_clicked', { clickCount: noClickCount });
         });
 
-        yesBtn.addEventListener('click', function() {
+        yesBtn.addEventListener('click', function () {
             makeStitchHappy();
-          ///  question.textContent = "Yay! I'm so happy! 💖✨";
+            ///  question.textContent = "Yay! I'm so happy! 💖✨";
 
             document.querySelector('.buttons').innerHTML = `
                 <button id="quizBtn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 15px 40px; font-size: 22px;">
@@ -263,7 +285,7 @@
                 </button>
             `;
 
-            document.getElementById('quizBtn').addEventListener('click', function() {
+            document.getElementById('quizBtn').addEventListener('click', function () {
                 logEvent('quiz_started', { timestamp: new Date().toISOString() });
                 window.location.href = 'quiz.html';
             });
@@ -282,4 +304,5 @@
         }
     </script>
 </body>
+
 </html>
