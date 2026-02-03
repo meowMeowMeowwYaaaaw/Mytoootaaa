@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Logs - Admin View</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4caf50;
+            border-radius: 20px;
+            color: #4caf50;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .status-badge.no-logs {
+            background: rgba(255, 152, 0, 0.2);
+            border-color: #ff9800;
+            color: #ff9800;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #16213e;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #0f3460;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            color: #e91e63;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .logs-section {
+            background: #16213e;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .logs-section h2 {
+            color: #e91e63;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .log-entry {
+            background: #0f3460;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #e91e63;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .log-type {
+            background: #e91e63;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .log-time {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .log-content {
+            color: #eee;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .reply-highlight {
+            background: linear-gradient(135deg, #f093fb22 0%, #f5576c22 100%);
+            border-left: 4px solid #f093fb;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .reply-text {
+            font-size: 16px;
+            color: #fff;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .clear-btn {
+            background: #f44336;
+            color: white;
+        }
+
+        .clear-btn:hover {
+            background: #d32f2f;
+        }
+
+        .export-btn {
+            background: #4caf50;
+            color: white;
+        }
+
+        .export-btn:hover {
+            background: #45a049;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #aaa;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-tag {
+            padding: 8px 15px;
+            background: #0f3460;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .filter-tag:hover {
+            border-color: #e91e63;
+        }
+
+        .filter-tag.active {
+            background: #e91e63;
+            color: white;
+        }
+
+        .info-box {
+            background: #0f3460;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .info-box h3 {
+            color: #2196f3;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #aaa;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .info-box code {
+            background: #1a1a2e;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #4caf50;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💝 Valentine Activity Logs</h1>
+            <p style="color: rgba(255,255,255,0.8);">Track her journey through your Valentine's surprise</p>
+            <div class="status-badge" id="statusBadge">🟢 Logging Active</div>
+        </div>
+
+        <div class="info-box">
+            <h3>📋 How This Works</h3>
+            <p>
+                <strong>IMPORTANT:</strong> Logs are stored in browser localStorage. This means:
+                <br>• Logs will ONLY appear if you check this page using the SAME DEVICE/BROWSER where she visited the site
+                <br>• OR if you're both sharing the same computer
+                <br>• Logs persist until browser data is cleared
+                <br><br>
+                <strong>Tip:</strong> If she's on her own device, ask her to screenshot her answers or simply talk to her about it! 💕
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalEvents">0</div>
+                <div class="stat-label">Total Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="noClicks">0</div>
+                <div class="stat-label">"No" Clicks</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="quizAttempts">0</div>
+                <div class="stat-label">Quiz Attempts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="replyCount">0</div>
+                <div class="stat-label">Replies Sent</div>
+            </div>
+        </div>
+
+        <div class="logs-section">
+            <h2>Activity Timeline</h2>
+            
+            <div class="controls">
+                <button class="refresh-btn" onclick="loadLogs()">🔄 Refresh</button>
+                <button class="export-btn" onclick="exportLogs()">📥 Download Logs</button>
+                <button class="clear-btn" onclick="clearLogs()">🗑️ Clear All</button>
+            </div>
+
+            <div class="filter-tags">
+                <div class="filter-tag active" data-filter="all">All Events</div>
+                <div class="filter-tag" data-filter="page_visit">Page Visits</div>
+                <div class="filter-tag" data-filter="no_clicked">No Clicks</div>
+                <div class="filter-tag" data-filter="yes_clicked">Yes Click</div>
+                <div class="filter-tag" data-filter="quiz_submitted">Quiz Answers</div>
+                <div class="filter-tag" data-filter="reply_submitted">Replies</div>
+            </div>
+
+            <div id="logsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentFilter = 'all';
+
+        // Load logs on page load
+        loadLogs();
+
+        // Filter functionality
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                loadLogs();
+            });
+        });
+
+        function loadLogs() {
+            const logs = JSON.parse(localStorage.getItem('valentine_logs') || '[]');
+            
+            // Update status badge
+            const statusBadge = document.getElementById('statusBadge');
+            if (logs.length === 0) {
+                statusBadge.textContent = '⚠️ No Activity Yet';
+                statusBadge.classList.add('no-logs');
+            } else {
+                statusBadge.textContent = `🟢 ${logs.length} Events Logged`;
+                statusBadge.classList.remove('no-logs');
+            }
+            
+            // Filter logs
+            const filteredLogs = currentFilter === 'all' 
+                ? logs 
+                : logs.filter(log => log.event === currentFilter);
+
+            // Update stats
+            updateStats(logs);
+
+            // Display logs
+            const container = document.getElementById('logsContainer');
+            
+            if (filteredLogs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>No logs yet</h3>
+                        <p>Activity will appear here when she visits the website</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredLogs.reverse().map((log, index) => {
+                const time = new Date(log.timestamp).toLocaleString();
+                let content = '';
+
+                switch(log.event) {
+                    case 'page_visit':
+                        content = '🌟 She visited the main page!';
+                        break;
+                    case 'no_clicked':
+                        content = `😢 She clicked "No" (Click #${log.data.clickCount})`;
+                        break;
+                    case 'yes_clicked':
+                        content = `💖 She said YES! (After ${log.data.afterNoClicks} "No" clicks)`;
+                        break;
+                    case 'quiz_started':
+                        content = '📝 She started the quiz!';
+                        break;
+                    case 'quiz_page_loaded':
+                        content = '📚 Quiz page loaded';
+                        break;
+                    case 'quiz_submitted':
+                        content = `✅ Quiz submitted with answers:
+                            <div class="reply-highlight">
+                                <strong>Q1:</strong> ${log.data.answers.q1}<br>
+                                <strong>Q2:</strong> ${log.data.answers.q2}<br>
+                                <strong>Q3:</strong> ${log.data.answers.q3}<br>
+                                <strong>Q4:</strong> ${log.data.answers.q4}<br>
+                                <strong>Q5:</strong> ${log.data.answers.q5}
+                            </div>`;
+                        break;
+                    case 'gift_page_loaded':
+                        content = '🎁 She opened the gift page!';
+                        break;
+                    case 'reply_submitted':
+                        content = `💌 She sent a reply:
+                            <div class="reply-highlight">
+                                <div class="reply-text">"${log.data.reply}"</div>
+                                <small style="color: #aaa; margin-top: 10px; display: block;">
+                                    ${log.data.charCount} characters
+                                </small>
+                            </div>`;
+                        break;
+                    default:
+                        content = JSON.stringify(log.data);
+                }
+
+                return `
+                    <div class="log-entry">
+                        <div class="log-header">
+                            <span class="log-type">${log.event.replace(/_/g, ' ')}</span>
+                            <span class="log-time">${time}</span>
+                        </div>
+                        <div class="log-content">
+                            ${content}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats(logs) {
+            document.getElementById('totalEvents').textContent = logs.length;
+            document.getElementById('noClicks').textContent = 
+                logs.filter(l => l.event === 'no_clicked').length;
+            document.getElementById('quizAttempts').textContent = 
+                logs.filter(l => l.event === 'quiz_submitted').length;
+            document.getElementById('replyCount').textContent = 
+                logs.filter(l => l.event === 'reply_submitted').length;
+        }
+
+        function exportLogs() {
+            const logs = JSON.parse(localStorage.getItem('valentine_logs') || '[]');
+            
+            if (logs.length === 0) {
+                alert('No logs to export yet!');
+                return;
+            }
+
+            const dataStr = JSON.stringify(logs, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `valentine-logs-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearLogs() {
+            if (confirm('Clear all logs? This cannot be undone!')) {
+                localStorage.removeItem('valentine_logs');
+                loadLogs();
+            }
+        }
+
+        // Auto-refresh every 3 seconds
+        setInterval(loadLogs, 3000);
+    </script>
+</body>
+</html>

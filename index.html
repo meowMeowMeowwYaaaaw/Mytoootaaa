@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #90878d 0%, #170e6b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: float 6s infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stitch {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            transition: all 0.5s ease;
+            display: inline-block;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+
+        .stitch img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .stitch.happy {
+            animation: bounce 0.5s ease;
+        }
+
+        .stitch.sad {
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .flowers {
+            font-size: 40px;
+            margin-top: -30px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        button {
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 15px 30px;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #be0ad2 0%, #f5576c 100%);
+            color: white;
+            transition: all 0.5s ease;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        #noBtn {
+            background: #e0e0e0;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        #noBtn:hover {
+            background: #d0d0d0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <div class="stitch" id="stitch">
+            <img src="images/stitch.png" alt="Stitch" id="stitchImg">
+        </div>
+        <div class="flowers"></div>
+        <h1>Would You Be My Valentine?</h1>
+        <p class="question" id="question"></p>
+        
+        <div class="buttons">
+            <button id="yesBtn">Yes! 🩶</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '🩶';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 7) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('hearts').appendChild(heart);
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        setInterval(createHeart, 300);
+
+        logEvent('page_visit', { timestamp: new Date().toISOString() });
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const stitch = document.getElementById('stitch');
+        const stitchImg = document.getElementById('stitchImg');
+        const question = document.getElementById('question');
+        
+        let noClickCount = 0;
+        let yesBtnSize = 1;
+
+        const stitchImages = {
+            normal: 'images/stitch.png',
+            happy: 'images/stitch_happy.gif',
+            sad1: 'images/stitch_sad.gif',
+            sad2: 'images/stitch_cry.gif',
+            sad3: 'images/stitch_very_sad.gif'
+        };
+
+        const sadMessages = [
+            ""
+        ];
+
+        function makeStitchHappy() {
+            stitchImg.src = stitchImages.happy;
+            stitch.classList.add('happy');
+            setTimeout(() => stitch.classList.remove('happy'), 500);
+        }
+
+        function makeStitchSad(level) {
+            if (level === 1) {
+                stitchImg.src = stitchImages.sad1;
+            } else if (level === 2) {
+                stitchImg.src = stitchImages.sad2;
+            } else {
+                stitchImg.src = stitchImages.sad3;
+            }
+            stitch.classList.add('sad');
+            setTimeout(() => stitch.classList.remove('sad'), 500);
+        }
+
+        function makeStitchNeutral() {
+            stitchImg.src = stitchImages.normal;
+        }
+
+        noBtn.addEventListener('click', function() {
+            noClickCount++;
+            makeStitchSad(Math.min(noClickCount, 3));
+            question.textContent = sadMessages[Math.min(noClickCount - 1, sadMessages.length - 1)];
+            yesBtnSize += 0.5;
+            yesBtn.style.transform = `scale(${yesBtnSize})`;
+            yesBtn.style.padding = `${15 * yesBtnSize}px ${30 * yesBtnSize}px`;
+
+            if (noClickCount >= 5) {
+                noBtn.style.opacity = '0';
+                noBtn.style.pointerEvents = 'none';
+            }
+
+            logEvent('no_clicked', { clickCount: noClickCount });
+        });
+
+        yesBtn.addEventListener('click', function() {
+            makeStitchHappy();
+          ///  question.textContent = "Yay! I'm so happy! 💖✨";
+
+            document.querySelector('.buttons').innerHTML = `
+                <button id="quizBtn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 15px 40px; font-size: 22px;">
+                    Quiz🫣 ?
+                </button>
+            `;
+
+            document.getElementById('quizBtn').addEventListener('click', function() {
+                logEvent('quiz_started', { timestamp: new Date().toISOString() });
+                window.location.href = 'quiz.html';
+            });
+
+            logEvent('yes_clicked', { afterNoClicks: noClickCount });
+        });
+
+        function logEvent(eventType, data) {
+            const logs = JSON.parse(localStorage.getItem('valentine_logs') || '[]');
+            logs.push({
+                event: eventType,
+                data: data,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('valentine_logs', JSON.stringify(logs));
+        }
+    </script>
+</body>
+</html>
