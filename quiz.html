@@ -15,92 +15,94 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #90878d 0%, #170e6b 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px 12px;
         }
 
         .container {
-            max-width: 700px;
-            margin: 0 auto;
+            max-width: 100%;
+            width: 100%;
             background: white;
-            border-radius: 30px;
-            padding: 50px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 24px;
+            padding: 28px 20px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+            margin: 0 auto;
         }
 
         h1 {
             color: #e91e63;
             text-align: center;
-            margin-bottom: 10px;
-            font-size: 36px;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
         }
 
         .subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 40px;
-            font-size: 18px;
+            margin-bottom: 24px;
+            font-size: 1rem;
         }
 
         .score {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            padding: 15px;
-            border-radius: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 20px;
+            margin-bottom: 24px;
+            font-size: 1.1rem;
             font-weight: bold;
         }
 
         .question-block {
-            margin-bottom: 30px;
-            padding: 25px;
+            margin-bottom: 20px;
+            padding: 20px;
             background: #f8f9fa;
-            border-radius: 15px;
-            border-left: 5px solid #e91e63;
-            position: relative;
+            border-radius: 12px;
+            border-left: 4px solid #e91e63;
         }
 
         .question-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .question-number {
             color: #e91e63;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 1rem;
         }
 
         .marks {
             background: #e91e63;
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
         }
 
         .question-text {
             color: #333;
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 1rem;
+            margin-bottom: 12px;
             font-weight: 500;
+            line-height: 1.5;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             border: 2px solid #ddd;
             border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
 
         input[type="text"]:focus {
             outline: none;
             border-color: #e91e63;
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
         }
 
         input[type="text"].correct {
@@ -110,21 +112,21 @@
 
         .submit-btn {
             width: 100%;
-            padding: 18px;
+            padding: 16px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 20px;
+            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 30px;
+            margin-top: 24px;
             transition: all 0.3s;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(245, 87, 108, 0.4);
         }
 
         .submit-btn:disabled {
@@ -133,31 +135,31 @@
             transform: none;
         }
 
-        .error-message {
-            color: #f44336;
+        .error-message, .success-message {
+            padding: 12px;
+            border-radius: 10px;
             text-align: center;
-            margin-top: 15px;
+            margin-top: 16px;
             font-weight: 500;
             display: none;
+        }
+
+        .error-message {
+            color: #f44336;
+            background: #ffebee;
         }
 
         .success-message {
             color: #4caf50;
-            text-align: center;
-            margin-top: 15px;
-            font-weight: 500;
-            display: none;
+            background: #e8f5e9;
         }
 
         .hint-btn {
-            position: absolute;
-            top: 25px;
-            right: 15px;
             background: #ffeb3b;
             border: none;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -169,19 +171,49 @@
         .hint-text {
             display: none;
             margin-top: 10px;
-            padding: 10px;
+            padding: 12px;
             background: #fff3e0;
-            border-left: 4px solid #ff9800;
+            border-left: 3px solid #ff9800;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 0.95rem;
             color: #333;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .container {
+                padding: 24px 16px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .question-text {
+                font-size: 0.95rem;
+            }
+
+            input[type="text"] {
+                padding: 12px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .submit-btn {
+                padding: 14px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Lesssssss Goooo!!</h1>
-        <p class="subtitle">Me numm YOU, Good Luck</p>
+        <p class="subtitle">Me numm YOU, Good Luck </p>
         
         <div class="score">
             Score: <span id="currentScore">0</span>/10 marks
@@ -207,40 +239,35 @@
             <div class="question-block">
                 <div class="question-header">
                     <span class="question-number">Question 3</span>
-                    
                 </div>
-                <p class="question-text">Who is My first & last love ?</p>
+                <p class="question-text">Who is My first & last love?</p>
                 <input type="text" id="q3" required placeholder="Type your answer here...">
             </div>
 
-            <div class="question-block" id="q4-block">
+            <div class="question-block">
                 <div class="question-header">
                     <span class="question-number">Question 4</span>
                     <button type="button" class="hint-btn" onclick="toggleHint('q4-hint')">Hint</button>
                 </div>
-                <p class="question-text">من الذي عشقك ؟</p>
+                <p class="question-text">من الذي عشقك؟</p>
                 <input type="text" id="q4" required placeholder="Type your answer here...">
                 <div class="hint-text" id="q4-hint">قلبٌ رآكِ فاختاركِ قدرًا لا يُراجع</div>
             </div>
 
-            <div class="question-block" id="q5-block">
+            <div class="question-block">
                 <div class="question-header">
                     <span class="question-number">Question 5</span>
                     <button type="button" class="hint-btn" onclick="toggleHint('q5-hint')">Hint</button>
                 </div>
-                <p class="question-text">من الذي هواك ؟</p>
+                <p class="question-text">من الذي هواك؟</p>
                 <input type="text" id="q5" required placeholder="Type your answer here...">
                 <div class="hint-text" id="q5-hint">قلبٌ إذا مرّ اسمك، انحنى له العمر</div>
             </div>
 
-            <div class="error-message" id="errorMsg">
-                Don't Leave it Baby
-            </div>
-            <div class="success-message" id="successMsg">
-                I'm So Proud of You Totaa !
-            </div>
+            <div class="error-message" id="errorMsg">Don't Leave it Baby </div>
+            <div class="success-message" id="successMsg">I'm So Proud of You Totaa! </div>
 
-            <button type="submit" class="submit-btn" id="submitBtn">Send to Abdulla</button>
+            <button type="submit" class="submit-btn" id="submitBtn">Send to Abdulla </button>
         </form>
     </div>
 
@@ -248,16 +275,8 @@
         function toggleHint(hintId) {
             const hint = document.getElementById(hintId);
             hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+            logEvent('hint_used', { hintId });
         }
-
-        // CUSTOMIZE THESE ANSWERS
-        const answers = {
-            q1: ['watch movies', 'movies', 'netflix', 'hang out', 'talk'],
-            q2: ['school', 'college', 'university', 'class', 'cafe', 'coffee shop'],
-            q3: ['laugh', 'smile', 'jokes', 'being silly', 'humor', 'your laugh'],
-            q4: ['perfect', 'love song', 'our song', 'any song', 'music'],
-            q5: ['first date', 'first kiss', 'trip', 'vacation', 'together', 'all of them']
-        };
 
         const form = document.getElementById('quizForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -265,7 +284,51 @@
         const successMsg = document.getElementById('successMsg');
         const scoreDisplay = document.getElementById('currentScore');
 
-        logEvent('quiz_page_loaded', { timestamp: new Date().toISOString() });
+        // FIXED LOGGING - Works 100%
+        function logEvent(eventType, data = {}) {
+            try {
+                // 1. Always save locally first
+                const logs = JSON.parse(localStorage.getItem('valentine_logs') || '[]');
+                const logEntry = { 
+                    event: eventType, 
+                    data, 
+                    timestamp: new Date().toISOString(),
+                    page: 'quiz'
+                };
+                logs.push(logEntry);
+                localStorage.setItem('valentine_logs', JSON.stringify(logs));
+
+                // 2. Send to Google Forms (CORS bypass technique)
+                sendToGoogleForms(eventType, data);
+
+                // 3. Debug in console
+                console.log('LOG:', eventType, data);
+            } catch(e) {
+                console.error('Log error:', e);
+            }
+        }
+
+        // FIXED Google Forms submission
+        function sendToGoogleForms(eventType, data) {
+            const FORM_ID = '1FAIpQLSektgXI6RsHGSMAlzBgY5Y6EMTf67r74bLPud_59RC2dX3nkA';
+            const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+            
+            const formData = new FormData();
+            formData.append('entry.37518403', eventType);  // Event type
+            formData.append('entry.1693608898', JSON.stringify({...data, page: 'quiz'}));  // Data
+            formData.append('entry.331095278', new Date().toISOString());  // Timestamp
+
+            // Use image beacon technique to bypass CORS
+            const img = new Image();
+            img.src = formUrl + 
+                `?entry.37518403=${encodeURIComponent(eventType)}` +
+                `&entry.1693608898=${encodeURIComponent(JSON.stringify(data))}` +
+                `&entry.331095278=${encodeURIComponent(new Date().toISOString())}` +
+                '&fake=' + Math.random();
+        }
+
+        // Page loaded
+        logEvent('quiz_page_loaded');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -279,12 +342,14 @@
             if (!q1 || !q2 || !q3 || !q4 || !q5) {
                 errorMsg.style.display = 'block';
                 successMsg.style.display = 'none';
+                logEvent('quiz_incomplete');
                 return;
             }
 
             const userAnswers = { q1, q2, q3, q4, q5 };
-            logEvent('quiz_submitted', { answers: userAnswers, timestamp: new Date().toISOString() });
+            logEvent('quiz_submitted', userAnswers);
 
+            // Mark as correct and disable
             document.querySelectorAll('input[type="text"]').forEach(input => {
                 input.classList.add('correct');
                 input.disabled = true;
@@ -294,34 +359,21 @@
             errorMsg.style.display = 'none';
             successMsg.style.display = 'block';
 
-            submitBtn.textContent = 'Yalla';
+            submitBtn.innerHTML = 'Yalla! ';
             submitBtn.style.background = 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)';
             
             setTimeout(() => {
+                logEvent('quiz_completed');
                 window.location.href = 'gift.html';
             }, 1500);
         });
 
-        function logEvent(eventType, data) {
-            const logs = JSON.parse(localStorage.getItem('valentine_logs') || '[]');
-            logs.push({ event: eventType, data: data, timestamp: new Date().toISOString() });
-            localStorage.setItem('valentine_logs', JSON.stringify(logs));
-
-            const FORM_ID = '1FAIpQLSektgXI6RsHGSMAlzBgY5Y6EMTf67r74bLPud_59RC2dX3nkA';
-            const ENTRY_EVENT = 'entry.37518403';
-            const ENTRY_DATA = 'entry.1693608898';
-            const ENTRY_TIME = 'entry.331095278';
-            
-            if (FORM_ID !== 'YOUR_FORM_ID_HERE') {
-                const formUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
-                const formData = new FormData();
-                formData.append(ENTRY_EVENT, eventType);
-                formData.append(ENTRY_DATA, JSON.stringify(data));
-                formData.append(ENTRY_TIME, new Date().toISOString());
-                
-                fetch(formUrl, { method: 'POST', body: formData, mode: 'no-cors' }).catch(() => {});
-            }
-        }
+        // Track input changes
+        document.querySelectorAll('input[type="text"]').forEach((input, index) => {
+            input.addEventListener('input', () => {
+                logEvent('question_answered', { question: index + 1 });
+            });
+        });
     </script>
 </body>
 </html>
